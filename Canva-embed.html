@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캔바 임베드 링크 생성기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00C4CC;
+            --secondary-color: #7D2AE8;
+            --accent-color: #FFA63F;
+            --dark-color: #18191F;
+            --light-color: #F8F9FA;
+            --success-color: #20c997;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'NanumBarunGothic', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            font-weight: 300;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .about-section {
+            background-color: white;
+            padding: 30px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .about-section h2 {
+            margin-top: 0;
+            color: var(--dark-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .converter-section {
+            padding: 40px 30px;
+            background-color: white;
+            margin: 30px auto;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        
+        .notes {
+            background-color: rgba(0, 196, 204, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 16px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .notes p {
+            margin-bottom: 15px;
+        }
+        
+        .notes h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .notes ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .notes li {
+            margin-bottom: 8px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 18px;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: var(--transition);
+        }
+        
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 196, 204, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        button:hover {
+            background-color: #00B0B7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 196, 204, 0.15);
+        }
+        
+        .copy-button {
+            background-color: var(--success-color);
+            margin-top: 15px;
+        }
+        
+        .copy-button:hover {
+            background-color: #1ba37f;
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .guide-section {
+            background: linear-gradient(135deg, var(--secondary-color), #9553E9);
+            padding: 60px 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .guide-section h2 {
+            margin-top: 0;
+            margin-bottom: 40px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .steps-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            color: var(--dark-color);
+        }
+        
+        .step {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step h3 {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 22px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .step h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .step-image {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            max-width: 100%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .step-image img {
+            max-width: 100%;
+            display: block;
+        }
+        
+        .multi-link-guide {
+            background-color: var(--light-color);
+            padding: 60px 30px;
+            text-align: center;
+        }
+        
+        .multi-link-guide h2 {
+            margin-top: 0;
+            margin-bottom: 40px;
+            color: var(--dark-color);
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .multi-link-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            text-align: left;
+        }
+        
+        .multi-link-container h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 22px;
+        }
+        
+        .example-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+        
+        .success-message {
+            color: var(--success-color);
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            margin-top: 0;
+        }
+        
+        .image-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .converter-section, .steps-container, .multi-link-container {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 32px;
+            }
+            
+            .guide-section h2, .multi-link-guide h2 {
+                font-size: 28px;
+            }
+            
+            .step h3, .multi-link-container h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>캔바 임베드 링크 생성기</h1>
+    </header>
+    
+    <div class="about-section">
+        <h2>소개</h2>
+        <p>이 도구는 캔바(Canva)의 공개보기 링크를 임베드 링크로 변환해줍니다.<br>임베드 링크를 사용하면 웹사이트나 블로그에 캔바 디자인을 직접 삽입하여 보여줄 수 있습니다.</p>
+    </div>
+    
+    <div class="converter-section">
+        <div class="notes">
+            <h3>참고사항</h3>
+            <ul>
+                <li>캔바 디자인이 공개로 설정되어 있어야 임베드 기능이 작동합니다.</li>
+                <li>임베드 링크는 웹사이트, 블로그, 노션 등에 캔바 디자인을 직접 삽입할 때 사용합니다.</li>
+                <li>대용량 파일의 경우 로딩 시간이 길어질 수 있습니다.</li>
+                <li>이 변환기는 모든 캔바 공개보기 링크에서 작동합니다.</li>
+            </ul>
+        </div>
+        
+        <label for="urls">캔바 공개보기 URL 입력</label>
+        <textarea id="urls" rows="3" placeholder="https://www.canva.com/design/DAFxxx/xxx/watch?utm_content=DAFxxx
+여러 개의 링크를 한 번에 변환하려면 각 링크를 새 줄에 입력하세요."></textarea>
+        
+        <button id="convert">임베드 링크 생성하기</button>
+        
+        <div class="result-container" id="resultContainer" style="display: none;">
+            <label for="result">임베드 URL 결과:</label>
+            <textarea id="result" rows="3" readonly></textarea>
+            
+            <button id="copyButton" class="copy-button">결과 복사하기</button>
+            <p id="successMessage" class="success-message">복사 완료!</p>
+        </div>
+    </div>
+    
+    <div class="guide-section">
+        <h2>캔바 공개보기 링크 얻는 방법</h2>
+        
+        <div class="steps-container">
+            <div class="step">
+                <h3>Step 1: 캔바 프로젝트에서 '공유(Share)'를 클릭하세요</h3>
+                <p>캔바에서 디자인을 완료한 후 오른쪽 상단에 있는 '공유' 버튼을 클릭합니다.</p>
+                <div class="step-image">
+                    <img src="/api/placeholder/750/400" alt="캔바 공유 버튼 클릭" />
+                </div>
+                <p class="image-caption">오른쪽 상단의 '공유' 버튼 클릭</p>
+            </div>
+            
+            <div class="step">
+                <h3>Step 2: '공개보기 링크(Public view link)'를 클릭하세요</h3>
+                <p>공유 창이 열리면 '공개보기 링크' 옵션을 선택합니다.</p>
+                <div class="step-image">
+                    <img src="/api/placeholder/750/400" alt="공개보기 링크 옵션 선택" />
+                </div>
+                <p class="image-caption">팝업된 창에서 '공개보기 링크' 옵션 선택</p>
+            </div>
+            
+            <div class="step">
+                <h3>Step 3: '공개보기 링크 만들기(Create public view link)'를 클릭하세요</h3>
+                <p>아직 공개보기 링크를 생성하지 않았다면 '공개보기 링크 만들기' 버튼을 클릭합니다.</p>
+                <div class="step-image">
+                    <img src="/api/placeholder/750/400" alt="공개보기 링크 만들기 버튼 클릭" />
+                </div>
+                <p class="image-caption">'공개보기 링크 만들기' 버튼 클릭</p>
+            </div>
+            
+            <div class="step">
+                <h3>Step 4: 만들어진 공개보기 링크를 복사(Copy)하세요</h3>
+                <p>생성된 공개보기 링크를 복사한 다음, 위의 변환기에 붙여넣고 '임베드 링크 생성하기' 버튼을 클릭합니다.</p>
+                <div class="step-image">
+                    <img src="/api/placeholder/750/400" alt="공개보기 링크 복사" />
+                </div>
+                <p class="image-caption">생성된 링크 옆의 복사 아이콘을 클릭하여 링크 복사</p>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <footer>
+        <p>Canbed © 2025 by Contenlena</p>
+    </footer>
+
+    <script>
+        document.getElementById('convert').addEventListener('click', function() {
+            const urls = document.getElementById('urls').value.trim().split('\n');
+            const convertedUrls = urls.map(url => convertToEmbedUrl(url.trim())).filter(url => url);
+            
+            const resultTextarea = document.getElementById('result');
+            resultTextarea.value = convertedUrls.join('\n');
+            
+            document.getElementById('resultContainer').style.display = 'block';
+        });
+
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const resultTextarea = document.getElementById('result');
+            resultTextarea.select();
+            document.execCommand('copy');
+            
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            
+            setTimeout(function() {
+                successMessage.style.display = 'none';
+            }, 2000);
+        });
+
+        function convertToEmbedUrl(url) {
+            if (!url) return '';
+            
+            // "watch?" 또는 "view?" 부분을 찾음
+            const watchIndex = url.indexOf('watch?');
+            const viewIndex = url.indexOf('view?');
+            
+            let splitIndex;
+            if (watchIndex !== -1) {
+                splitIndex = watchIndex;
+            } else if (viewIndex !== -1) {
+                splitIndex = viewIndex;
+            } else {
+                // 둘 다 없는 경우 원본 URL 반환
+                return url;
+            }
+            
+            // URL의 기본 부분을 추출하고 "view?embed" 추가
+            const baseUrl = url.substring(0, splitIndex);
+            return baseUrl + 'view?embed';
+        }
+    </script>
+</body>
+</html>
